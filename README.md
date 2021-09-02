@@ -1,7 +1,8 @@
-# wskey 
-
 ## 动态 不上传wskey
-
+---------
+### 自动替换Cookie 自动插入Cookie 自动禁用Cookie 自动筛选Cookie 
+### 你想要的都是自动的 !
+-----
 ## 环境变量 JD_WSCK
 ## 格式pin=xxx;wskey=xxxx;
 ![image](https://user-images.githubusercontent.com/21352718/131860608-6af6b05b-c1a9-40be-92ef-eda4b0d9f4b1.png)
