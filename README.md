@@ -1,4 +1,6 @@
 ## 动态 不上传wskey 有问题请发issues
+
+## 需要青龙版本在2.9.x
 ---------
 ### 自动替换Cookie 自动插入Cookie 自动禁用Cookie 自动筛选Cookie 
 ### 你想要的都是自动的 !
