@@ -2,6 +2,8 @@
 
 ## 动态 不上传wskey
 
+## 环境变量 JD_WSCK
+
 ## ql repo https://github.com/Zy143L/wskey.git "wskey"
 
 
