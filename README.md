@@ -4,6 +4,8 @@
 
 ## 环境变量 JD_WSCK
 ## 格式pin=xxx;wskey=xxxx;
+![image](https://user-images.githubusercontent.com/21352718/131860608-6af6b05b-c1a9-40be-92ef-eda4b0d9f4b1.png)
+
 -----
 ## ql repo https://github.com/Zy143L/wskey.git "wskey"
 
