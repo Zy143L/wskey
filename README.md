@@ -1,6 +1,6 @@
 # wskey 
 
-## 在线sign 不上传wskey
+## 动态 不上传wskey
 
 ## ql repo https://github.com/Zy143L/wskey.git "wskey"
 
