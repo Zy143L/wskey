@@ -2,6 +2,7 @@
 ---------
 ### 自动替换Cookie 自动插入Cookie 自动禁用Cookie 自动筛选Cookie 
 ### 你想要的都是自动的 !
+### 做了一点很入门的压缩, 大佬切勿拆台. 
 -----
 ## 环境变量 JD_WSCK
 ## 格式pin=xxx;wskey=xxxx;
