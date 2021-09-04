@@ -1,3 +1,7 @@
 venv/
 .idea/
 raw.py
+raw_back.py
+wskey2.py
+wskey3.py
+test.py
