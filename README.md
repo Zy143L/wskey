@@ -6,6 +6,8 @@
 
 **国内网络用户 `ql repo https://ghproxy.com/github.com/Zy143L/wskey.git "wskey"`**
 
+**使用建议 修改 定时计划 `15 */6 * * *`  默认为6小时15分执行一次 请按需修改**
+
 ----------
 ### 变量声明
 
