@@ -12,9 +12,9 @@
 ### 变量声明
 
 ```shell
-变量名: JD_WSCK 参数: pin=xxxx;wskey=xxxx;
-变量名: QL_PORT 参数: 端口号(int值)
-变量名: QL_WSCK 参数: nocheck
+变量名: JD_WSCK 参数: pin=xxxx;wskey=xxxx; # 注意分号 不要用中文分号!
+变量名: QL_PORT 参数: 端口号(int值) 	 		# 修改过面板端口的人才需要填写 默认5700
+变量名: QL_WSCK 参数: 任意(str值)	  		 # 设置QL_WSCK变量后 不检查有效性 直接更新
 ```
 --------------
 ###  更新记录
