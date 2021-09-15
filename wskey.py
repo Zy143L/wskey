@@ -1,7 +1,454 @@
 # -*- coding: utf-8 -*
 '''
-cron: 18 */12 * * * wskey.py
+cron: 15 */16 * * * wskey.py
 new Env('wskey转换');
 '''
-import zlib, base64
-exec(zlib.decompress(base64.b64decode('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')))
+
+import socket
+import base64
+import http.client
+import json
+import os
+import sys
+import logging
+import time
+import urllib.parse
+
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(__name__)
+try:
+    import requests
+except Exception as e:
+    logger.info(str(e) + "\n缺少requests模块, 请执行命令：pip3 install requests\n")
+    sys.exit(1)
+os.environ['no_proxy'] = '*'
+requests.packages.urllib3.disable_warnings()
+
+ver = 915
+
+# 返回值 Token
+def ql_login():
+    path = '/ql/config/auth.json'
+    if os.path.isfile(path):
+        with open(path, "r") as file:
+            auth = file.read()
+            file.close()
+        auth = json.loads(auth)
+        username = auth["username"]
+        password = auth["password"]
+        token = auth["token"]
+        if token == '':
+            url = "http://127.0.0.1:{0}/api/login".format(port)
+            payload = {
+                "username": username,
+                "password": password
+            }
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            try:
+                res = requests.post(url=url, headers=headers, data=payload, verify=False)
+                token = json.loads(res.text)['token']
+            except:
+                logger.info("青龙登录失败, 请检查面板状态!")
+                sys.exit(1)
+            else:
+                return token
+        else:
+            return token
+    else:
+        logger.info("没有发现auth文件, 你这是青龙吗???")
+        sys.exit(0)
+
+
+# 返回值 list[wskey]
+def get_wskey():
+    if "JD_WSCK" in os.environ:
+        wskey_list = os.environ['JD_WSCK'].split('&')
+        if len(wskey_list) > 0:
+            return wskey_list
+        else:
+            logger.info("JD_WSCK变量未启用")
+            sys.exit(1)
+    else:
+        logger.info("未添加JD_WSCK变量")
+        sys.exit(0)
+
+
+# 返回值 list[jd_cookie]
+def get_ck():
+    if "JD_COOKIE" in os.environ:
+        ck_list = os.environ['JD_COOKIE'].split('&')
+        if len(ck_list) > 0:
+            return ck_list
+        else:
+            logger.info("JD_COOKIE变量未启用")
+            sys.exit(1)
+    else:
+        logger.info("未添加JD_COOKIE变量")
+        sys.exit(0)
+
+
+# 返回值 bool
+def check_ck(ck):
+    if "QL_WSCK" in os.environ:
+        logger.info("不检查账号有效性\n--------------------\n")
+        return False
+    else:
+        url = 'https://wq.jd.com/user_new/info/GetJDUserInfoUnion?orgFlag=JD_PinGou_New&callSource=mainorder'
+        headers = {
+            'Cookie': ck,
+            'Referer': 'https://home.m.jd.com/myJd/home.action',
+            'User-Agent': ua,
+        }
+        try:
+            res = requests.get(url=url, headers=headers, verify=False, timeout=10)
+            if res.status_code == 200:
+                code = int(json.loads(res.text)['retcode'])
+                pin = ck.split(";")[1]
+                if code == 0:
+                    logger.info(str(pin) + ";状态正常\n")
+                    return True
+                else:
+                    logger.info(str(pin) + ";状态失效\n")
+                    return False
+            else:
+                logger.info("JD接口错误, 切换第二接口")
+                url = 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion'
+                headers = {
+                    'Cookie': ck,
+                    'User-Agent': ua,
+                }
+                res = requests.get(url=url, headers=headers, verify=False, timeout=30)
+                if res.status_code == 200:
+                    code = int(json.loads(res.text)['retcode'])
+                    pin = ck.split(";")[1]
+                    if code == 0:
+                        logger.info(str(pin) + ";状态正常\n")
+                        return True
+                    else:
+                        logger.info(str(pin) + ";状态失效\n")
+                        return False
+        except:
+            logger.info("\nJD接口错误! ")
+            logger.info("脚本退出")
+            sys.exit(1)
+
+
+# 返回值 bool jd_ck
+def getToken(wskey):
+    headers = {
+        'cookie': wskey,
+        'User-Agent': ua,
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'charset': 'UTF-8',
+        'accept-encoding': 'br,gzip,deflate'
+    }
+    params = {
+        'functionId': 'genToken',
+        'clientVersion': '10.1.2',
+        'client': 'android',
+        'uuid': uuid,
+        'st': st,
+        'sign': sign,
+        'sv': sv
+    }
+    url = 'https://api.m.jd.com/client.action'
+    data = 'body=%7B%22action%22%3A%22to%22%2C%22to%22%3A%22https%253A%252F%252Fplogin.m.jd.com%252Fcgi-bin%252Fm%252Fthirdapp_auth_page%253Ftoken%253DAAEAIEijIw6wxF2s3bNKF0bmGsI8xfw6hkQT6Ui2QVP7z1Xg%2526client_type%253Dandroid%2526appid%253D879%2526appup_type%253D1%22%7D&'
+    try:
+        res = requests.post(url=url, params=params, headers=headers, data=data, verify=False, timeout=10)
+        res_json = json.loads(res.text)
+        # logger.info(res_json)
+        tokenKey = res_json['tokenKey']
+        # logger.info("Token:", tokenKey)
+    except:
+        try:
+            res = requests.post(url=url, params=params, headers=headers, data=data, verify=False, timeout=20)
+            res_json = json.loads(res.text)
+            # logger.info(res_json)
+            tokenKey = res_json['tokenKey']
+            # logger.info("Token:", tokenKey)
+            return appjmp(wskey, tokenKey)
+        except:
+            logger.info("WSKEY转换接口出错, 请稍后尝试, 脚本退出")
+            sys.exit(1)
+    else:
+        return appjmp(wskey, tokenKey)
+
+
+# 返回值 bool jd_ck
+def appjmp(wskey, tokenKey):
+    headers = {
+        'User-Agent': ua,
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    }
+    params = {
+        'tokenKey': tokenKey,
+        'to': 'https://plogin.m.jd.com/cgi-bin/m/thirdapp_auth_page?token=AAEAIEijIw6wxF2s3bNKF0bmGsI8xfw6hkQT6Ui2QVP7z1Xg',
+        'client_type': 'android',
+        'appid': 879,
+        'appup_type': 1,
+    }
+    url = 'https://un.m.jd.com/cgi-bin/app/appjmp'
+    try:
+        res = requests.get(url=url, headers=headers, params=params, verify=False, allow_redirects=False, timeout=20)
+        res_set = res.cookies.get_dict()
+        pt_key = 'pt_key=' + res_set['pt_key']
+        pt_pin = 'pt_pin=' + res_set['pt_pin']
+        jd_ck = str(pt_key) + ';' + str(pt_pin) + ';'
+        wskey = wskey.split(";")[0]
+        if 'fake' in pt_key:
+            logger.info(str(wskey) + "wskey状态失效\n")
+            return False, jd_ck
+        else:
+            logger.info(str(wskey) + " wskey状态正常\n")
+            return True, jd_ck
+    except:
+        logger.info("接口转换失败, 默认wskey失效\n")
+        wskey = "pt_" + str(wskey.split(";")[0])
+        return False, wskey
+
+
+# 返回值 svv, stt, suid, jign
+def get_sign():
+    sign_bool = False
+    url = str(base64.b64decode(
+        'aHR0cHM6Ly9oZWxsb2Rucy5jb2RpbmcubmV0L3Avc2lnbi9kL2pzaWduL2dpdC9yYXcvbWFzdGVyL3NpZ24=').decode())
+    for i in range(3):
+        try:
+            res = requests.get(url=url, verify=False, timeout=20)
+        except requests.exceptions.ConnectTimeout:
+            logger.info("\n获取Sign超时, 正在重试!" + str(i))
+            time.sleep(1)
+        except requests.exceptions.ReadTimeout:
+            logger.info("\n获取Sign超时, 正在重试!" + str(i))
+            time.sleep(1)
+        except Exception as err:
+            logger.info(str(err) + "\n未知错误, 退出脚本!")
+            sys.exit(1)
+        else:
+            # logger.info(json.loads(res))
+            sign_bool = True
+            break
+    if sign_bool:
+        sign_list = json.loads(res.text)
+        svv = sign_list['sv']
+        stt = sign_list['st']
+        suid = sign_list['uuid']
+        jign = sign_list['sign']
+        return svv, stt, suid, jign
+    else:
+        logger.info("\nSign_Bool值错误, 退出脚本!")
+
+
+# 返回值 None
+def boom():
+    ex = int(cloud_arg['code'])
+    if ex != 200:
+        logger.info("Check Failure")
+        logger.info("--------------------\n")
+        sys.exit(0)
+    else:
+        logger.info("Verification passed")
+        logger.info("--------------------\n")
+
+
+def update():
+    up_ver = int(cloud_arg['update'])
+    if ver >= up_ver:
+        logger.info("当前脚本版本: " + str(ver))
+        logger.info("--------------------\n")
+    else:
+        logger.info("当前脚本版本: " + str(ver) + "新版本: " + str(up_ver))
+        logger.info("存在新版本, 请更新脚本后执行")
+        logger.info("--------------------\n")
+        sys.exit(0)
+
+
+def ql_check(port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(2)
+    try:
+        sock.connect(('127.0.0.1', port))
+    except:
+        # logger.info(port, "端口检测失败")
+        sock.close()
+        return False
+    else:
+        sock.close()
+        return True
+
+
+# 返回值 bool, key, eid
+def serch_ck(pin):
+    if all('\u4e00' <= char <= '\u9fff' for char in pin):
+        pin1 = urllib.parse.quote(pin)
+        pin2 = pin1.replace('%', '%5C%25')
+        logger.info(str(pin) + "-->" + str(pin1))
+    else:
+        pin2 = pin.replace('%', '%5C%25')
+    # TMD 中文!
+    # url = "http://127.0.0.1:5700/api/envs?searchValue={0}".format(pin)
+    # res = json.loads(s.get(url, verify=False).text)
+    conn = http.client.HTTPConnection("127.0.0.1", port)
+    payload = ''
+    headers = {
+        'Authorization': 'Bearer ' + token
+    }
+    url = '/api/envs?searchValue={0}'.format(pin2)
+    conn.request("GET", url, payload, headers)
+    res = json.loads(conn.getresponse().read())
+    if len(res['data']) == 0:
+        logger.info(str(pin) + "检索失败\n")
+        return False, 1
+    elif len(res['data']) > 1:
+        logger.info(str(pin) + "存在重复, 取第一条, 请删除多余变量\n")
+        key = res['data'][0]['value']
+        eid = res['data'][0]['_id']
+        return True, key, eid
+    else:
+        logger.info(str(pin) + "检索成功\n")
+        key = res['data'][0]['value']
+        eid = res['data'][0]['_id']
+        return True, key, eid
+
+
+def ql_update(eid, n_ck):
+    url = 'http://127.0.0.1:{0}/api/envs'.format(port)
+    data = {
+        "name": "JD_COOKIE",
+        "value": n_ck,
+        "_id": eid
+    }
+    data = json.dumps(data)
+    res = json.loads(s.put(url=url, data=data).text)
+    # logger.info(res)
+    if res['data']['status'] == 1:
+        ql_enable(eid)
+
+
+def ql_enable(eid):
+    url = 'http://127.0.0.1:{0}/api/envs/enable'.format(port)
+    data = '["{0}"]'.format(eid)
+    res = json.loads(s.put(url=url, data=data).text)
+    if res['code'] == 200:
+        logger.info("\n账号启用\n--------------------\n")
+        return True
+    else:
+        logger.info("\n账号启用失败\n--------------------\n")
+        return False
+
+
+def ql_disable(eid):
+    url = 'http://127.0.0.1:{0}/api/envs/disable'.format(port)
+    data = '["{0}"]'.format(eid)
+    res = json.loads(s.put(url=url, data=data).text)
+    if res['code'] == 200:
+        logger.info("\n账号禁用成功\n--------------------\n")
+        return True
+    else:
+        logger.info("\n账号禁用失败\n--------------------\n")
+        return False
+
+
+def ql_insert(i_ck):
+    data = [{"value": i_ck, "name": "JD_COOKIE"}]
+    data = json.dumps(data)
+    url = 'http://127.0.0.1:{0}/api/envs'.format(port)
+    s.post(url=url, data=data)
+    logger.info("\n账号添加完成\n--------------------\n")
+
+
+def cloud_info():
+    cloud_bool = False
+    url = str(base64.b64decode(
+        'aHR0cHM6Ly9oZWxsb2Rucy5jb2RpbmcubmV0L3Avc2lnbi9kL2pzaWduL2dpdC9yYXcvbWFzdGVyL2NoZWNrX2FwaQ==').decode())
+    for i in range(3):
+        try:
+            res = requests.get(url=url, verify=False, timeout=20).text
+        except requests.exceptions.ConnectTimeout:
+            logger.info("\n获取云端参数超时, 正在重试!" + str(i))
+        except requests.exceptions.ReadTimeout:
+            logger.info("\n获取云端参数超时, 正在重试!" + str(i))
+        except Exception as err:
+            logger.info(str(err) + "\n未知错误, 退出脚本!")
+            sys.exit(1)
+        else:
+            # logger.info(json.loads(res))
+            cloud_bool = True
+            break
+        finally:
+            time.sleep(1)
+    if cloud_bool:
+        # global cloud_arg
+        return json.loads(res)
+        # logger.info(cloud_arg)
+    else:
+        logger.info("无法获取云端配置 程序退出\n")
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    logger.info("\n--------------------\n")
+    if "QL_PORT" in os.environ:
+        try:
+            port = int(os.environ['QL_PORT'])
+        except:
+            logger.info("变量格式有问题...\n格式: export QL_PORT=\"端口号\"")
+            sys.exit(1)
+    else:
+        port = 5700
+    if not ql_check(port):
+        logger.info(str(port) + "端口检查失败, 如果改过端口, 请在变量中声明端口 \n在config.sh中加入 export QL_PORT=\"端口号\"")
+        logger.info("\n如果你很确定端口没错, 还是无法执行, 在GitHub给我发issus\n--------------------\n")
+        sys.exit(1)
+    else:
+        logger.info(str(port) + "端口检查通过\n")
+    # global cloud_arg
+    cloud_arg = cloud_info()
+    update()
+    ua = cloud_arg['User-Agent']
+    boom()
+    sv, st, uuid, sign = get_sign()  # 获取认证参数
+    token = ql_login()  # 获取青龙 token
+    s = requests.session()
+    s.headers.update({"authorization": "Bearer " + str(token)})
+    s.headers.update({"Content-Type": "application/json;charset=UTF-8"})
+    wslist = get_wskey()
+    for ws in wslist:
+        wspin = ws.split(";")[0]
+        if "pin" in wspin:
+            wspin = "pt_" + wspin + ";"  # 封闭变量
+            return_serch = serch_ck(wspin)  # 变量 pt_pin 搜索获取 key eid
+            if return_serch[0]:  # bool: True 搜索到账号
+                jck = str(return_serch[1])  # 拿到 JD_COOKIE
+                if not check_ck(jck):  # bool: False 判定 JD_COOKIE 有效性
+                    return_ws = getToken(ws)  # 使用 WSKEY 请求获取 JD_COOKIE bool jd_ck
+                    if return_ws[0]:  # bool: True
+                        nt_key = str(return_ws[1])
+                        # logger.info("wskey转pt_key成功", nt_key)
+                        logger.info("wskey转换成功\n")
+                        logger.info("--------------------\n")
+                        eid = return_serch[2]  # 从 return_serch 拿到 eid
+                        ql_update(eid, nt_key)  # 函数 ql_update 参数 eid JD_COOKIE
+                    else:
+                        logger.info(str(ws) + "wskey失效\n")
+                        eid = return_serch[2]
+                        logger.info("禁用账号" + str(wspin))
+                        ql_disable(eid)
+                else:
+                    logger.info(str(wspin) + "账号有效")
+                    eid = return_serch[2]
+                    ql_enable(eid)
+                    logger.info("--------------------\n")
+            else:
+                logger.info("wskey未生成pt_key\n")
+                return_ws = getToken(ws)  # 使用 WSKEY 请求获取 JD_COOKIE bool jd_ck
+                if return_ws[0]:
+                    nt_key = str(return_ws[1])
+                    logger.info("wskey转换成功\n")
+                    ql_insert(nt_key)
+        else:
+            logger.info("WSKEY格式错误\n--------------------\n")
+    logger.info("执行完成\n--------------------")
+    sys.exit(0)
