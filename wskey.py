@@ -14,6 +14,8 @@ import logging
 import time
 import urllib.parse
 
+
+
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 try:
@@ -23,6 +25,10 @@ except Exception as e:
     sys.exit(1)
 os.environ['no_proxy'] = '*'
 requests.packages.urllib3.disable_warnings()
+try:
+    from notify import send
+except:
+    logger.info("无推送文件")
 
 ver = 915
 
@@ -262,7 +268,9 @@ def update():
         logger.info("当前脚本版本: " + str(ver) + "新版本: " + str(up_ver))
         logger.info("存在新版本, 请更新脚本后执行")
         logger.info("--------------------\n")
-        sys.exit(0)
+        text = '当前脚本版本: {0}新版本: {1}, 请更新脚本~!'.format(ver, up_ver)
+        send('WSKEY转换', text)
+        # sys.exit(0)
 
 
 def ql_check(port):
