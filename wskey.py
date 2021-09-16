@@ -237,12 +237,17 @@ def get_sign():
             sign_bool = True
             break
     if sign_bool:
-        sign_list = json.loads(res.text)
-        svv = sign_list['sv']
-        stt = sign_list['st']
-        suid = sign_list['uuid']
-        jign = sign_list['sign']
-        return svv, stt, suid, jign
+        try:
+            sign_list = json.loads(res.text)
+        except:
+            logger.info("Sign接口失效")
+            sys.exit(1)
+        else:
+            svv = sign_list['sv']
+            stt = sign_list['st']
+            suid = sign_list['uuid']
+            jign = sign_list['sign']
+            return svv, stt, suid, jign
     else:
         logger.info("\nSign_Bool值错误, 退出脚本!")
 
