@@ -204,10 +204,10 @@ def appjmp(wskey, tokenKey):
         jd_ck = str(pt_key) + ';' + str(pt_pin) + ';'
         wskey = wskey.split(";")[0]
         if 'fake' in pt_key:
-            logger.info(str(wskey) + "wskey状态失效\n")
+            logger.info(str(wskey) + ";wskey状态失效\n")
             return False, jd_ck
         else:
-            logger.info(str(wskey) + " wskey状态正常\n")
+            logger.info(str(wskey) + ";wskey状态正常\n")
             return True, jd_ck
     except:
         logger.info("接口转换失败, 默认wskey失效\n")
@@ -217,7 +217,6 @@ def appjmp(wskey, tokenKey):
 
 # 返回值 svv, stt, suid, jign
 def get_sign():
-    sign_bool = False
     url = str(base64.b64decode(
         'aHR0cHM6Ly9oZWxsb2Rucy5jb2RpbmcubmV0L3Avc2lnbi9kL2pzaWduL2dpdC9yYXcvbWFzdGVyL3NpZ24=').decode())
     for i in range(3):
@@ -233,23 +232,17 @@ def get_sign():
             logger.info(str(err) + "\n未知错误, 退出脚本!")
             sys.exit(1)
         else:
-            # logger.info(json.loads(res))
-            sign_bool = True
-            break
-    if sign_bool:
-        try:
-            sign_list = json.loads(res.text)
-        except:
-            logger.info("Sign接口失效")
-            sys.exit(1)
-        else:
-            svv = sign_list['sv']
-            stt = sign_list['st']
-            suid = sign_list['uuid']
-            jign = sign_list['sign']
-            return svv, stt, suid, jign
-    else:
-        logger.info("\nSign_Bool值错误, 退出脚本!")
+            try:
+                sign_list = json.loads(res.text)
+            except:
+                logger.info("Sign Json错误")
+                sys.exit(1)
+            else:
+                svv = sign_list['sv']
+                stt = sign_list['st']
+                suid = sign_list['uuid']
+                jign = sign_list['sign']
+                return svv, stt, suid, jign
 
 
 # 返回值 None
@@ -373,7 +366,6 @@ def ql_insert(i_ck):
 
 
 def cloud_info():
-    cloud_bool = False
     url = str(base64.b64decode(
         'aHR0cHM6Ly9oZWxsb2Rucy5jb2RpbmcubmV0L3Avc2lnbi9kL2pzaWduL2dpdC9yYXcvbWFzdGVyL2NoZWNrX2FwaQ==').decode())
     for i in range(3):
@@ -387,18 +379,13 @@ def cloud_info():
             logger.info(str(err) + "\n未知错误, 退出脚本!")
             sys.exit(1)
         else:
-            # logger.info(json.loads(res))
-            cloud_bool = True
-            break
-        finally:
-            time.sleep(1)
-    if cloud_bool:
-        # global cloud_arg
-        return json.loads(res)
-        # logger.info(cloud_arg)
-    else:
-        logger.info("无法获取云端配置 程序退出\n")
-        sys.exit(1)
+            try:
+                c_info = json.loads(res)
+            except:
+                logger.info("云端参数解析失败")
+                sys.exit(1)
+            else:
+                return c_info
 
 
 if __name__ == '__main__':
