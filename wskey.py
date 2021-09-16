@@ -30,7 +30,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 915
+ver = 916
 
 # 返回值 Token
 def ql_login():
