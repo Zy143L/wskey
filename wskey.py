@@ -32,6 +32,9 @@ except:
 
 ver = 916
 
+def gettimestamp():
+    return str(int(time.time() * 1000))
+
 # 返回值 Token
 def ql_login():
     global username, password
@@ -45,7 +48,7 @@ def ql_login():
         password = auth["password"]
         token = auth["token"]
         if token == '':
-            url = "http://127.0.0.1:{0}/api/login".format(port)
+            url = "http://127.0.0.1:{0}/api/login?t={1}".format(port,gettimestamp())
             payload = {
                 "username": username,
                 "password": password
@@ -65,7 +68,7 @@ def ql_login():
         sys.exit(0)
         
 def token_ck():
-    url = "http://127.0.0.1:{0}/api/login".format(port)
+    url = "http://127.0.0.1:{0}/api/login?t={1}".format(port,gettimestamp())
     payload = {
         "username": username,
         "password": password
@@ -299,6 +302,7 @@ def ql_check(port):
 
 # 返回值 bool, key, eid
 def serch_ck(pin):
+    global token
     if all('\u4e00' <= char <= '\u9fff' for char in pin):
         pin1 = urllib.parse.quote(pin)
         pin2 = pin1.replace('%', '%5C%25')
@@ -317,7 +321,6 @@ def serch_ck(pin):
     conn.request("GET", url, payload, headers)
     r1 = conn.getresponse()
     if r1.status == 401:
-        global token
         token = token_ck()
         serch_ck(pin)
     elif r1.status == 200:
