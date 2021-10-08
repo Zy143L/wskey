@@ -34,6 +34,7 @@ ver = 916
 
 # 返回值 Token
 def ql_login():
+    global username, password
     path = '/ql/config/auth.json'
     if os.path.isfile(path):
         with open(path, "r") as file:
@@ -49,12 +50,9 @@ def ql_login():
                 "username": username,
                 "password": password
             }
-            headers = {
-                'Content-Type': 'application/json'
-            }
             try:
-                res = requests.post(url=url, headers=headers, data=payload, verify=False)
-                token = json.loads(res.text)['token']
+                res = requests.post(url=url, data=payload)
+                token = json.loads(res.text)["data"]['token']
             except:
                 logger.info("青龙登录失败, 请检查面板状态!")
                 sys.exit(1)
@@ -65,7 +63,21 @@ def ql_login():
     else:
         logger.info("没有发现auth文件, 你这是青龙吗???")
         sys.exit(0)
-
+        
+def token_ck():
+    url = "http://127.0.0.1:{0}/api/login".format(port)
+    payload = {
+        "username": username,
+        "password": password
+    }
+    try:
+        res = requests.post(url=url, data=payload)
+        token = json.loads(res.text)["data"]['token']
+    except:
+        logger.info("青龙登录失败, 请检查面板状态!")
+        sys.exit(1)
+    else:
+        return token
 
 # 返回值 list[wskey]
 def get_wskey():
@@ -303,20 +315,28 @@ def serch_ck(pin):
     }
     url = '/api/envs?searchValue={0}'.format(pin2)
     conn.request("GET", url, payload, headers)
-    res = json.loads(conn.getresponse().read())
-    if len(res['data']) == 0:
-        logger.info(str(pin) + "检索失败\n")
-        return False, 1
-    elif len(res['data']) > 1:
-        logger.info(str(pin) + "存在重复, 取第一条, 请删除多余变量\n")
-        key = res['data'][0]['value']
-        eid = res['data'][0]['_id']
-        return True, key, eid
+    r1 = conn.getresponse()
+    if r1.status == 401:
+        global token
+        token = token_ck()
+        serch_ck(pin)
+    elif r1.status == 200:
+        res = json.loads(r1.read())
+        if len(res['data']) == 0:
+            logger.info(str(pin) + "检索失败\n")
+            return False, 1
+        elif len(res['data']) > 1:
+            logger.info(str(pin) + "存在重复, 取第一条, 请删除多余变量\n")
+            key = res['data'][0]['value']
+            eid = res['data'][0]['_id']
+            return True, key, eid
+        else:
+            logger.info(str(pin) + "检索成功\n")
+            key = res['data'][0]['value']
+            eid = res['data'][0]['_id']
+            return True, key, eid
     else:
-        logger.info(str(pin) + "检索成功\n")
-        key = res['data'][0]['value']
-        eid = res['data'][0]['_id']
-        return True, key, eid
+         logger.info("连接发生未知错误！\n")
 
 
 def ql_update(eid, n_ck):
