@@ -30,7 +30,29 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 916
+ver = 1010
+
+# 登录青龙 返回值 token
+def get_qltoken(username, password):
+    logger.info("Token失效, 新登陆\n")
+    url = "http://127.0.0.1:{0}/api/login".format(port)
+    payload = {
+        'username': username,
+        'password': password
+    }
+    payload = json.dumps(payload)
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+    try:
+        res = requests.post(url=url, headers=headers, data=payload)
+        token = json.loads(res.text)["data"]['token']
+    except:
+        logger.info("青龙登录失败, 请检查面板状态!")
+        sys.exit(1)
+    else:
+        return token
 
 # 返回值 Token
 def ql_login():
@@ -44,24 +66,18 @@ def ql_login():
         password = auth["password"]
         token = auth["token"]
         if token == '':
-            url = "http://127.0.0.1:{0}/api/login".format(port)
-            payload = {
-                "username": username,
-                "password": password
-            }
-            headers = {
-                'Content-Type': 'application/json'
-            }
-            try:
-                res = requests.post(url=url, headers=headers, data=payload, verify=False)
-                token = json.loads(res.text)['token']
-            except:
-                logger.info("青龙登录失败, 请检查面板状态!")
-                sys.exit(1)
-            else:
-                return token
+            return get_qltoken(username, password)
         else:
-            return token
+            url = "http://127.0.0.1:{0}/api/user/notification".format(port)
+            headers = {
+                'Authorization': 'Bearer {0}'.format(token),
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38'
+            }
+            res = requests.get(url=url, headers=headers)
+            if res.status_code == 200:
+                return token
+            else:
+                return get_qltoken(username, password)
     else:
         logger.info("没有发现auth文件, 你这是青龙吗???")
         sys.exit(0)
