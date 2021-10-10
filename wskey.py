@@ -68,7 +68,7 @@ def ql_login():
         if token == '':
             return get_qltoken(username, password)
         else:
-            url = "http://127.0.0.1:{0}/api/user/notification".format(port)
+            url = "http://127.0.0.1:{0}/api/apps".format(port)
             headers = {
                 'Authorization': 'Bearer {0}'.format(token),
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38'
