@@ -441,7 +441,9 @@ if __name__ == '__main__':
                         eid = return_serch[2]
                         logger.info(str(wspin) + "账号禁用")
                         ql_disable(eid)
-                        text = "账号: {0} WsKey失效, 已禁用Cookie!".format(wspin)
+                        dd = serch_ck(ws)[2]
+                        ql_disable(dd)
+                        text = "账号: {0} WsKey失效, 已禁用Cookie & Wskey!".format(wspin)
                         send('WsKey转换脚本', text)
                 else:
                     logger.info(str(wspin) + "账号有效")
