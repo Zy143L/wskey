@@ -28,7 +28,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 1101
+ver = 1102
 
 
 # 登录青龙 返回值 token
@@ -120,15 +120,20 @@ def check_ck(ck):
         url = 'https://wq.jd.com/user_new/info/GetJDUserInfoUnion?orgFlag=JD_PinGou_New&callSource=mainorder'
         headers = {
             'Cookie': ck,
-            'Referer': 'https://home.m.jd.com/myJd/home.action'
+            'Referer': 'https://home.m.jd.com/myJd/home.action',
+            'user-agent': ua
         }
         try:
-            res = jds.get(url=url, headers=headers, verify=False, timeout=10)
+            res = requests.get(url=url, headers=headers, verify=False, timeout=10)
         except:
             # logger.info("JD接口错误, 切换第二接口")
             url = 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion'
-            headers = {'Cookie': ck}
-            res = jds.get(url=url, headers=headers, verify=False, timeout=30)
+            headers = {
+                'Cookie': ck,
+                'user-agent': ua,
+                'Referer': 'https://home.m.jd.com/myJd/home.action'
+            }
+            res = requests.get(url=url, headers=headers, verify=False, timeout=30)
             if res.status_code == 200:
                 code = int(json.loads(res.text)['retcode'])
                 pin = ck.split(";")[1]
@@ -149,7 +154,7 @@ def check_ck(ck):
                     logger.info(str(pin) + ";状态失效\n")
                     return False
             else:
-                print("JD接口错误码: ", res.status_code)
+                logger.info("JD接口错误码: ", res.status_code)
                 return False
 
 
@@ -160,7 +165,8 @@ def getToken(wskey):
         'cookie': wskey,
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'charset': 'UTF-8',
-        'accept-encoding': 'br,gzip,deflate'
+        'accept-encoding': 'br,gzip,deflate',
+        'user-agent': ua
     }
     params = {
         'functionId': 'genToken',
@@ -174,7 +180,7 @@ def getToken(wskey):
     url = 'https://api.m.jd.com/client.action'
     data = 'body=%7B%22action%22%3A%22to%22%2C%22to%22%3A%22https%253A%252F%252Fplogin.m.jd.com%252Fcgi-bin%252Fm%252Fthirdapp_auth_page%253Ftoken%253DAAEAIEijIw6wxF2s3bNKF0bmGsI8xfw6hkQT6Ui2QVP7z1Xg%2526client_type%253Dandroid%2526appid%253D879%2526appup_type%253D1%22%7D&'
     try:
-        res = jds.post(url=url, params=params, headers=headers, data=data, verify=False, timeout=10)
+        res = requests.post(url=url, params=params, headers=headers, data=data, verify=False, timeout=10)
         res_json = json.loads(res.text)
         tokenKey = res_json['tokenKey']
     except:
@@ -199,7 +205,7 @@ def appjmp(wskey, tokenKey):
     }
     url = 'https://un.m.jd.com/cgi-bin/app/appjmp'
     try:
-        res = jds.get(url=url, headers=headers, params=params, verify=False, allow_redirects=False, timeout=20)
+        res = requests.get(url=url, headers=headers, params=params, verify=False, allow_redirects=False, timeout=20)
         res_set = res.cookies.get_dict()
         pt_key = 'pt_key=' + res_set['pt_key']
         pt_pin = 'pt_pin=' + res_set['pt_pin']
@@ -433,7 +439,7 @@ if __name__ == '__main__':
                     else:
                         # logger.info(str(wspin) + "wskey失效\n")
                         eid = return_serch[2]
-                        logger.info(str(wspin), "账号禁用")
+                        logger.info(str(wspin) + "账号禁用")
                         ql_disable(eid)
                         text = "账号: {0} WsKey失效, 已禁用Cookie!".format(wspin)
                         send('WsKey转换脚本', text)
