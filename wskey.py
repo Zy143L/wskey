@@ -28,7 +28,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 1102
+ver = 1103
 
 
 # 登录青龙 返回值 token
@@ -378,16 +378,16 @@ def cloud_info():
     url = str(base64.b64decode('aHR0cDovL21vZS5zaGl6dWt1Lm1sOjg0NDMvY2hlY2tfYXBp').decode())
     for i in range(3):
         try:
-            res = s.get(url=url, verify=False, timeout=20).text
+            headers = {"authorization": "Bearer Shizuku"}
+            res = requests.get(url=url, verify=False, headers=headers, timeout=20).text
         except requests.exceptions.ConnectTimeout:
             logger.info("\n获取云端参数超时, 正在重试!" + str(i))
         except requests.exceptions.ReadTimeout:
             logger.info("\n获取云端参数超时, 正在重试!" + str(i))
         except Exception as err:
-            logger.info(str(err) + "\n未知错误云端, 重试脚本!")
-            s.close()
-            time.sleep(2)
-            continue
+            logger.info(str(err) + "\n未知错误云端, 退出脚本!")
+           #  time.sleep(2)
+            sys.exit(1)
         else:
             try:
                 c_info = json.loads(res)
