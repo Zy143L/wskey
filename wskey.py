@@ -224,10 +224,13 @@ def appjmp(wskey, tokenKey):
 
 # 返回值 svv, stt, suid, jign
 def get_sign():
-    url = str(base64.b64decode('aHR0cDovL21vZS5zaGl6dWt1Lm1sOjg0NDMvd3NrZXk=').decode())
+    url = str(base64.b64decode('aHR0cDovLzE1MC4xNTguMTUzLjUzOjg0NDMvd3NrZXk=').decode())
     for i in range(3):
         try:
-            headers = {"User-Agent": ua}
+            headers = {
+                "User-Agent": ua,
+                "Connection": "close"
+            }
             res = requests.get(url=url, headers=headers, verify=False, timeout=20)
         except requests.exceptions.ConnectTimeout:
             logger.info("\n获取Sign超时, 正在重试!" + str(i))
@@ -375,10 +378,13 @@ def ql_insert(i_ck):
 
 
 def cloud_info():
-    url = str(base64.b64decode('aHR0cDovL21vZS5zaGl6dWt1Lm1sOjg0NDMvY2hlY2tfYXBp').decode())
+    url = str(base64.b64decode('aHR0cDovLzE1MC4xNTguMTUzLjUzOjg0NDMvY2hlY2tfYXBp').decode())
     for i in range(3):
         try:
-            headers = {"authorization": "Bearer Shizuku"}
+            headers = {
+                "authorization": "Bearer Shizuku",
+                "Connection": "close"
+            }
             res = requests.get(url=url, verify=False, headers=headers, timeout=20).text
         except requests.exceptions.ConnectTimeout:
             logger.info("\n获取云端参数超时, 正在重试!" + str(i))
@@ -386,7 +392,6 @@ def cloud_info():
             logger.info("\n获取云端参数超时, 正在重试!" + str(i))
         except Exception as err:
             logger.info(str(err) + "\n未知错误云端, 退出脚本!")
-           #  time.sleep(2)
             sys.exit(1)
         else:
             try:
