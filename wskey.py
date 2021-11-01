@@ -276,7 +276,10 @@ def update():
         logger.info("存在新版本, 请更新脚本后执行")
         logger.info("--------------------\n")
         text = '当前脚本版本: {0}新版本: {1}, 请更新脚本~!'.format(ver, up_ver)
-        send('WSKEY转换', text)
+        try:
+            send('WSKEY转换', text)
+        except:
+            logger.info("通知发送失败")
         # sys.exit(0)
 
 
@@ -444,7 +447,10 @@ if __name__ == '__main__':
                         dd = serch_ck(ws)[2]
                         ql_disable(dd)
                         text = "账号: {0} WsKey失效, 已禁用Cookie & Wskey!".format(wspin)
-                        send('WsKey转换脚本', text)
+                        try:
+                            send('WsKey转换脚本', text)
+                        except:
+                            logger.info("通知发送失败")
                 else:
                     logger.info(str(wspin) + "账号有效")
                     eid = return_serch[2]
