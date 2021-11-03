@@ -49,6 +49,11 @@ def get_qltoken(username, password):
         token = json.loads(res.text)["data"]['token']
     except:
         logger.info("青龙登录失败, 请检查面板状态!")
+        te_xt = '青龙面板WSKEY转换登陆面板失败, 请检查面板状态.'
+        try:
+            send('WSKEY转换', te_xt)
+        except:
+            logger.info("通知发送失败")
         sys.exit(1)
     else:
         return token
@@ -154,7 +159,7 @@ def check_ck(ck):
                     logger.info(str(pin) + ";状态失效\n")
                     return False
             else:
-                logger.info("JD接口错误码: ", res.status_code)
+                logger.info("JD接口错误码: " + str(res.status_code))
                 return False
 
 
