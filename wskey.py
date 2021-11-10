@@ -28,7 +28,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 1103
+ver = 1110
 
 
 # 登录青龙 返回值 token
@@ -455,9 +455,9 @@ if __name__ == '__main__':
                         eid = return_serch[2]
                         logger.info(str(wspin) + "账号禁用")
                         ql_disable(eid)
-                        dd = serch_ck(ws)[2]
-                        ql_disable(dd)
-                        text = "账号: {0} WsKey失效, 已禁用Cookie & Wskey!".format(wspin)
+                        # dd = serch_ck(ws)[2]
+                        # ql_disable(dd)
+                        text = "账号: {0} WsKey失效, 已禁用Cookie".format(wspin)
                         try:
                             send('WsKey转换脚本', text)
                         except:
