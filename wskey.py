@@ -411,8 +411,21 @@ def cloud_info():
                 return c_info
 
 
-if __name__ == '__main__':
-    logger.info("\n--------------------\n")
+if __name__ == '__main__':   
+    if "TIMECK" in os.environ:
+        pass
+    else:
+        try:
+            with open('timeck.log', 'r+') as tcks:
+                tck = tcks.readline()
+                if eval(tck) + 600 >= int(time.time()):
+                    logger.info('距离上次执行未到10分钟不执行\n如需关闭10分钟限制请添加\'TIMECK\'环境变量为任意值,退出执行...')
+                    os._exit(0)
+        except:
+            with open('timeck.log', 'w+') as tcks:
+                logger.info('timeck文件未创建或已修改损坏\n已创建')
+                
+    logger.info("\n--------------------\n")           
     if "QL_PORT" in os.environ:
         try:
             port = int(os.environ['QL_PORT'])
@@ -480,4 +493,6 @@ if __name__ == '__main__':
         else:
             logger.info("WSKEY格式错误\n--------------------\n")
     logger.info("执行完成\n--------------------")
+    with open('timeck.log', 'w+') as tcks:
+        tcks.write(str(int(time.time())))
     sys.exit(0)
