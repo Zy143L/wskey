@@ -122,7 +122,7 @@ def check_ck(ck):
         logger.info("不检查账号有效性\n--------------------\n")
         return False
     else:
-        url = 'https://wq.jd.com/user_new/info/GetJDUserInfoUnion?orgFlag=JD_PinGou_New&callSource=mainorder'
+        url = 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion'
         headers = {
             'Cookie': ck,
             'Referer': 'https://home.m.jd.com/myJd/home.action',
