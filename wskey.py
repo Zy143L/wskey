@@ -28,7 +28,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 1230
+ver = 1231
 
 
 # 登录青龙 返回值 token
