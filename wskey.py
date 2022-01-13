@@ -324,7 +324,7 @@ def serch_ck(pin):
     url = '/api/envs?searchValue={0}'.format(pin)
     conn.request("GET", url, payload, headers)
     res = json.loads(conn.getresponse().read())
-    res['data'] = list(filter(lambda x: x['name'] != 'JD_WSCK', res['data']))
+    res['data'] = list(filter(lambda x: x['name'] == 'JD_COOKIE', res['data']))
     if len(res['data']) == 0:
         logger.info(str(pin) + "检索失败\n")
         return False, 1
