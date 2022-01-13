@@ -307,12 +307,12 @@ def ql_check(port):
 
 # 返回值 bool, key, eid
 def serch_ck(pin):
-    if all('\u4e00' <= char <= '\u9fff' for char in pin):
-        pin1 = urllib.parse.quote(pin)
-        pin2 = pin1.replace('%', '%5C%25')
-        logger.info(str(pin) + "-->" + str(pin1))
-    else:
-        pin2 = pin.replace('%', '%5C%25')
+    #if all('\u4e00' <= char <= '\u9fff' for char in pin):
+    #    pin1 = urllib.parse.quote(pin)
+    #    pin2 = pin1.replace('%', '%5C%25')
+    #    logger.info(str(pin) + "-->" + str(pin1))
+    #else:
+    #    pin2 = pin.replace('%', '%5C%25')
     # TMD 中文!
     # url = "http://127.0.0.1:5700/api/envs?searchValue={0}".format(pin)
     # res = json.loads(s.get(url, verify=False).text)
@@ -321,21 +321,22 @@ def serch_ck(pin):
     headers = {
         'Authorization': 'Bearer ' + token
     }
-    url = '/api/envs?searchValue={0}'.format(pin2)
+    url = '/api/envs?searchValue={0}'.format(pin)
     conn.request("GET", url, payload, headers)
     res = json.loads(conn.getresponse().read())
+    res['data'] = list(filter(lambda x: x['name'] != 'JD_WSCK', res['data']))
     if len(res['data']) == 0:
         logger.info(str(pin) + "检索失败\n")
         return False, 1
     elif len(res['data']) > 1:
         logger.info(str(pin) + "存在重复, 取第一条, 请删除多余变量\n")
         key = res['data'][0]['value']
-        eid = res['data'][0]['_id']
+        eid = res['data'][0]['id']
         return True, key, eid
     else:
         logger.info(str(pin) + "检索成功\n")
         key = res['data'][0]['value']
-        eid = res['data'][0]['_id']
+        eid = res['data'][0]['id']
         return True, key, eid
 
 
@@ -344,7 +345,7 @@ def ql_update(e_id, n_ck):
     data = {
         "name": "JD_COOKIE",
         "value": n_ck,
-        "_id": e_id
+        "id": e_id
     }
     data = json.dumps(data)
     res = json.loads(s.put(url=url, data=data).text)
@@ -463,7 +464,7 @@ if __name__ == '__main__':
     for ws in wslist:
         wspin = ws.split(";")[0]
         if "pin" in wspin:
-            wspin = "pt_" + wspin + ";"  # 封闭变量
+            wspin = wspin[4:]  # 封闭变量
             return_serch = serch_ck(wspin)  # 变量 pt_pin 搜索获取 key eid
             if return_serch[0]:  # bool: True 搜索到账号
                 jck = str(return_serch[1])  # 拿到 JD_COOKIE
