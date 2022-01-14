@@ -27,7 +27,7 @@ try:
 except:
     logger.info("无推送文件")
 
-ver = 10113
+ver = 10114
 
 
 # 登录青龙 返回值 token
@@ -366,13 +366,17 @@ def get_env():
 
 def get_version():
     url = 'http://127.0.0.1:{0}/api/system'.format(port)
-    res = s.get(url)
-    version = str(json.loads(res.text)['data']['version'])
-    logger.info("青龙面板版本: " + version)
-    if version > '2.10.13':
-        return 1
-    else:
+    try:
+        res = s.get(url)
+    except:
         return 0
+    else:
+        version = str(json.loads(res.text)['data']['version'])
+        logger.info("青龙面板版本: " + version)
+        if version > '2.10.13':
+            return 1
+        else:
+            return 0
 
 
 def ql_update(e_id, n_ck):
