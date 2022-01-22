@@ -1,6 +1,9 @@
 
 ### 更新 · 摘要
-
+---
+**2022年1月22日 11:19:41**
+- **镜像地址 `https://e.coding.net/HelloDNS/sign/wskey.git`**
+- **`ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
 ---
 **2022年1月14日 09:04:19**
 - **修复2.10之前版本青龙失败问题**
@@ -163,7 +166,7 @@
 
 **完美网络用户** **`ql repo https://github.com/Zy143L/wskey.git "wskey"`**
 
-**国内网络用户 `ql repo https://ghproxy.com/github.com/Zy143L/wskey.git "wskey"`**
+**国内网络用户 `ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
 
 **使用建议 修改定时计划 `15 */8 * * *`  默认为~~8小时15分~~执行一次 请按需修改**
 
