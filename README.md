@@ -1,6 +1,11 @@
 
 ### 更新 · 摘要
 ---
+**2022年2月1日 18:25:25**
+- **支持停用自动禁用 参数 `export QL_WSCK_AUTO_DISABLE="false" `**
+- **支持按间隔更新CK 参数 `export QL_WSCK_UPDATE_HOUR="间隔（单位：时）" `**
+- **优化getToken获取失败提示**
+---
 **2022年1月22日 11:19:41**
 - **镜像地址 `https://e.coding.net/HelloDNS/sign/wskey.git`**
 - **`ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**

@@ -12,6 +12,7 @@ import sys
 import logging
 import time
 import urllib.parse
+import re
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
@@ -117,9 +118,33 @@ def get_ck():
 
 # 返回值 bool
 def check_ck(ck):
+    searchObj = re.search(r'pt_pin=([^;\s]+)', ck, re.M|re.I)
+    if searchObj:
+        pin = searchObj.group(1)
+    else:
+        pin = ck.split(";")[1]
     if "QL_WSCK" in os.environ:
         logger.info("不检查账号有效性\n--------------------\n")
         return False
+    elif "QL_WSCK_UPDATE_HOUR" in os.environ:
+        if os.environ["QL_WSCK_UPDATE_HOUR"].isdigit():
+            updateHour = int(os.environ["QL_WSCK_UPDATE_HOUR"])
+        else
+            updateHour = 23
+        searchObj = re.search(r'__time=([^;\s]+)', ck, re.M|re.I)
+        if searchObj:
+            updatedAt = float(searchObj.group(1))
+        else
+            updatedAt = 0.0
+            return_serch = serch_ck(pin)
+            if return_serch[0]:
+                updatedAt = time.mktime(time.strptime(return_serch[3], '%Y-%m-%d %H:%M:%S'))
+        if time.time() - updatedAt >= (updateHour * 60 * 60) - (10 * 60):
+            logger.info(str(pin) + ";已到期\n")
+            return False
+        else
+            logger.info(str(pin) + ";未到期\n")
+            return True
     else:
         url = 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion'
         headers = {
@@ -140,7 +165,6 @@ def check_ck(ck):
             res = requests.get(url=url, headers=headers, verify=False, timeout=30)
             if res.status_code == 200:
                 code = int(json.loads(res.text)['retcode'])
-                pin = ck.split(";")[1]
                 if code == 0:
                     logger.info(str(pin) + ";状态正常\n")
                     return True
@@ -153,7 +177,6 @@ def check_ck(ck):
         else:
             if res.status_code == 200:
                 code = int(json.loads(res.text)['retcode'])
-                pin = ck.split(";")[1]
                 if code == 0:
                     logger.info(str(pin) + ";状态正常\n")
                     return True
@@ -189,6 +212,10 @@ def getToken(wskey):
         res = requests.post(url=url, params=params, headers=headers, data=data, verify=False, timeout=10)
         res_json = json.loads(res.text)
         tokenKey = res_json['tokenKey']
+        if tokenKey == 'xxx':
+            logger.info("getToken返回了无效Token，可能是风控账户或IP被拉黑\n")
+            logger.info(res.text)
+            return False, null
     except:
         logger.info("WSKEY转换接口出错, 请稍后尝试, 脚本退出")
         sys.exit(1)
@@ -215,7 +242,7 @@ def appjmp(wskey, tokenKey):
         res_set = res.cookies.get_dict()
         pt_key = 'pt_key=' + res_set['pt_key']
         pt_pin = 'pt_pin=' + res_set['pt_pin']
-        jd_ck = str(pt_key) + ';' + str(pt_pin) + ';'
+        jd_ck = str(pt_key) + '; ' + str(pt_pin) + '; __time=' + str(time.time())
         wskey = wskey.split(";")[0]
         if 'fake' in pt_key:
             logger.info(str(wskey) + ";WsKey状态失效\n")
@@ -344,8 +371,9 @@ def serch_ck(pin):
         if pin in envlist[i]['value']:
             value = envlist[i]['value']
             id = envlist[i][ql_id]
+            updatedAt = envlist[i]['updatedAt']
             logger.info(str(pin) + "检索成功\n")
-            return True, value, id
+            return True, value, id, updatedAt
         else:
             continue
     logger.info(str(pin) + "检索失败\n")
@@ -519,12 +547,15 @@ if __name__ == '__main__':
                         ql_update(eid, nt_key)  # 函数 ql_update 参数 eid JD_COOKIE
                     else:
                         # logger.info(str(wspin) + "wskey失效\n")
-                        eid = return_serch[2]
-                        logger.info(str(wspin) + "账号禁用")
-                        ql_disable(eid)
-                        # dd = serch_ck(ws)[2]
-                        # ql_disable(dd)
-                        text = "账号: {0} WsKey失效, 已禁用Cookie".format(wspin)
+                        if "QL_WSCK_AUTO_DISABLE" in os.environ and os.environ["QL_WSCK_AUTO_DISABLE"] == "false":
+                            text = "账号: {0} WsKey失效".format(wspin)
+                        else
+                            eid = return_serch[2]
+                            logger.info(str(wspin) + "账号禁用")
+                            ql_disable(eid)
+                            # dd = serch_ck(ws)[2]
+                            # ql_disable(dd)
+                            text = "账号: {0} WsKey失效, 已禁用Cookie".format(wspin)
                         try:
                             send('WsKey转换脚本', text)
                         except:
@@ -541,6 +572,8 @@ if __name__ == '__main__':
                     nt_key = str(return_ws[1])
                     logger.info("wskey转换成功\n")
                     ql_insert(nt_key)
+            logger.info("暂停3秒\n")
+            time.sleep(3)
         else:
             logger.info("WSKEY格式错误\n--------------------\n")
     logger.info("执行完成\n--------------------")
