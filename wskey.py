@@ -129,12 +129,12 @@ def check_ck(ck):
     elif "QL_WSCK_UPDATE_HOUR" in os.environ:
         if os.environ["QL_WSCK_UPDATE_HOUR"].isdigit():
             updateHour = int(os.environ["QL_WSCK_UPDATE_HOUR"])
-        else
+        else:
             updateHour = 23
         searchObj = re.search(r'__time=([^;\s]+)', ck, re.M|re.I)
         if searchObj:
             updatedAt = float(searchObj.group(1))
-        else
+        else:
             updatedAt = 0.0
             return_serch = serch_ck(pin)
             if return_serch[0]:
@@ -142,7 +142,7 @@ def check_ck(ck):
         if time.time() - updatedAt >= (updateHour * 60 * 60) - (10 * 60):
             logger.info(str(pin) + ";已到期\n")
             return False
-        else
+        else:
             logger.info(str(pin) + ";未到期\n")
             return True
     else:
@@ -549,7 +549,7 @@ if __name__ == '__main__':
                         # logger.info(str(wspin) + "wskey失效\n")
                         if "QL_WSCK_AUTO_DISABLE" in os.environ and os.environ["QL_WSCK_AUTO_DISABLE"] == "false":
                             text = "账号: {0} WsKey失效".format(wspin)
-                        else
+                        else:
                             eid = return_serch[2]
                             logger.info(str(wspin) + "账号禁用")
                             ql_disable(eid)
