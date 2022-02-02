@@ -4,11 +4,13 @@
 #### Version 2022-02-02 新年快乐
 
 ---
-**2022年2月2日 15:51:42**
+**2022年2月2日 16:51:42**
 - **更新10.3.5接口**
 - **新增`WSKEY_AUTO_DISABLE`变量 设置后不会自动禁用Cookie**
+- **支持按间隔更新CK 参数 `export WSKEY_UPDATE_HOUR="间隔（单位：时）" `**
+- **增加自动重试 参数 `export WSKEY_TRY_COUNT="次数" `**
+- **优化getToken获取失败提示**
 - **移除部分冗余代码**
-- **感谢 `@Xeath` 的建议**
 ---
 **2022年1月22日 11:19:41**
 - **镜像地址 `https://hellodns.coding.net/public/sign/wskey/git/files`**
