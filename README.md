@@ -1,6 +1,19 @@
 
 ### 更新 · 摘要
 
+#### Version 2022-02-02
+
+---
+**2022年2月2日 15:51:42**
+- **更新10.3.5接口**
+- **新增`WSKEY_AUTO_DISABLE`变量 设置后不会自动禁用Cookie**
+- **移除部分冗余代码**
+- **感谢 `@Xeath` 的建议**
+- **新年快乐**
+---
+**2022年1月22日 11:19:41**
+- **镜像地址 `https://hellodns.coding.net/p/sign/d/wskey/git`**
+- **`ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
 ---
 **2022年1月14日 09:04:19**
 - **修复2.10之前版本青龙失败问题**
@@ -163,7 +176,7 @@
 
 **完美网络用户** **`ql repo https://github.com/Zy143L/wskey.git "wskey"`**
 
-**国内网络用户 `ql repo https://ghproxy.com/github.com/Zy143L/wskey.git "wskey"`**
+**国内网络用户 `ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
 
 **使用建议 修改定时计划 `15 */8 * * *`  默认为~~8小时15分~~执行一次 请按需修改**
 
