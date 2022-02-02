@@ -7,7 +7,7 @@
 **2022年2月2日 16:51:42**
 - **更新10.3.5接口**
 - **新增`WSKEY_AUTO_DISABLE`变量 设置后不会自动禁用Cookie**
-- **支持按间隔更新CK 参数 `export WSKEY_UPDATE_HOUR="间隔（单位：时）" `**
+- **支持按间隔更新CK 参数 `export WSKEY_UPDATE_HOUR="间隔（单位：小时）" `**
 - **增加自动重试 参数 `export WSKEY_TRY_COUNT="次数" `**
 - **优化getToken获取失败提示**
 - **移除部分冗余代码**
@@ -194,6 +194,11 @@
 # 设置 QL_WSCK变量后 不检查有效性 直接更新 不使用请删除 而不是禁用
 变量名: WSKEY_AUTO_DISABLE 参数: 任意(str)	
 # 设置 WSKEY_AUTO_DISABLE变量后 不会自动禁用变量
+变量名: WSKEY_UPDATE_HOUR 参数: 整数(int) 单位：小时
+# 设置 WSKEY_UPDATE_HOUR 变量后 会按设定的间隔时间更新 CK
+# 注意：使用此参数后，即使 CK 过期也不会更新，请不要设置过大的间隔
+变量名: WSKEY_TRY_COUNT 参数: 整数(int)
+# 设置 WSKEY_TRY_COUNT 变量后 获取 Token 失败会自动重试
 ```
 --------------
 ### 程序特点

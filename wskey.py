@@ -544,6 +544,7 @@ if __name__ == '__main__':
     ua = cloud_arg['User-Agent']
     wslist = get_wskey()
     envlist = get_env()
+    sleepTime = 10
     for ws in wslist:
         wspin = ws.split(";")[0]
         if "pin" in wspin:
@@ -561,8 +562,8 @@ if __name__ == '__main__':
                         if return_ws[0]:
                             break
                         if count < tryCount:
-                            logger.info("{0} 秒后重试，剩余次数：{1}\n".format(tryCount, tryCount - count))
-                            time.sleep(10)
+                            logger.info("{0} 秒后重试，剩余次数：{1}\n".format(sleepTime, tryCount - count))
+                            time.sleep(sleepTime)
                     if return_ws[0]:  # bool: True
                         nt_key = str(return_ws[1])
                         # logger.info("wskey转pt_key成功", nt_key)
@@ -595,8 +596,8 @@ if __name__ == '__main__':
                     nt_key = str(return_ws[1])
                     logger.info("wskey转换成功\n")
                     ql_insert(nt_key)
-            logger.info("暂停10秒\n")
-            time.sleep(10)
+            logger.info("暂停{0}秒\n".format(sleepTime))
+            time.sleep(sleepTime)
         else:
             logger.info("WSKEY格式错误\n--------------------\n")
     logger.info("执行完成\n--------------------")
