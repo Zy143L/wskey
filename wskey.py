@@ -380,7 +380,9 @@ def serch_ck(pin):
         if pin in envlist[i]['value']:
             value = envlist[i]['value']
             id = envlist[i][ql_id]
-            updatedAt = envlist[i]['updatedAt']
+            updatedAt = "1970-01-01T12:00:00.0Z"
+            if "updatedAt" in envlist[i]:
+                updatedAt = envlist[i]['updatedAt']
             logger.info(str(pin) + "检索成功\n")
             return True, value, id, updatedAt
         else:
