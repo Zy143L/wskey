@@ -11,7 +11,7 @@
 - **感谢 `@Xeath` 的建议**
 ---
 **2022年1月22日 11:19:41**
-- **镜像地址 `https://hellodns.coding.net/p/sign/d/wskey/git`**
+- **镜像地址 `https://hellodns.coding.net/public/sign/wskey/git/files`**
 - **`ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
 ---
 **2022年1月14日 09:04:19**
