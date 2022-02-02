@@ -29,7 +29,7 @@ try:
     from notify import send
 except Exception as err:
     logger.debug(str(err))
-    logger.info("无推送文件")
+    logger.info("无推送文件!")
 
 ver = 20203
 
