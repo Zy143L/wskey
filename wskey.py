@@ -463,7 +463,8 @@ if __name__ == '__main__':
                     if "WSKEY_TRY_COUNT" in os.environ:
                         if os.environ["WSKEY_TRY_COUNT"].isdigit():
                             tryCount = int(os.environ["WSKEY_TRY_COUNT"])
-                    for count in range(1, tryCount):
+                    for count in range(tryCount):
+                        count += 1
                         return_ws = getToken(ws)  # 使用 WSKEY 请求获取 JD_COOKIE bool jd_ck
                         if return_ws[0]:
                             break
