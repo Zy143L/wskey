@@ -441,7 +441,6 @@ def check_port():
         logger.info("\n如果你很确定端口没错, 还是无法执行, 在GitHub给我发issus\n--------------------\n")
         sys.exit(1)
     else:
-        port = 5700
         logger.info(str(port) + "端口检查通过")
         return port
 
