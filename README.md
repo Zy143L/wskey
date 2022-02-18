@@ -2,7 +2,7 @@
 
 ---
 
-####[更新日志](https://github.com/Zy143L/wskey/blob/main/READ.md)
+**[更新日志](https://github.com/Zy143L/wskey/blob/main/READ.md)**
 
 
 ### 新语法特性
