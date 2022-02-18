@@ -454,7 +454,10 @@ if __name__ == '__main__':
     ua = cloud_arg['User-Agent']
     wslist = get_wskey()
     envlist = get_env()
-    sleepTime = 10
+    if "WSKEY_SLEEP" in os.environ and str(os.environ["WSKEY_SLEEP"]).isdigit():
+        sleepTime = int(os.environ["WSKEY_SLEEP"])
+    else:
+        sleepTime = 10
     for ws in wslist:
         wspin = ws.split(";")[0]
         if "pin" in wspin:
