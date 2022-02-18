@@ -421,7 +421,7 @@ def check_cloud():
     sys.exit(1)
 
 
-if __name__ == '__main__':
+def check_port():
     logger.info("\n--------------------\n")
     if "QL_PORT" in os.environ:
         try:
@@ -430,15 +430,19 @@ if __name__ == '__main__':
             logger.debug(str(err))
             logger.info("变量格式有问题...\n格式: export QL_PORT=\"端口号\"")
             logger.info("使用默认端口5700")
-            port = 5700
+            return 5700
     else:
-        port = 5700
+        return 5700
     if not ql_check(port):
         logger.info(str(port) + "端口检查失败, 如果改过端口, 请在变量中声明端口 \n在config.sh中加入 export QL_PORT=\"端口号\"")
         logger.info("\n如果你很确定端口没错, 还是无法执行, 在GitHub给我发issus\n--------------------\n")
         sys.exit(1)
     else:
         logger.info(str(port) + "端口检查通过")
+
+
+if __name__ == '__main__':
+    port = check_port()
     token = ql_login()  # 获取青龙 token
     s = requests.session()
     s.headers.update({"authorization": "Bearer " + str(token)})
