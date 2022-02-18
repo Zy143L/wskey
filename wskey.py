@@ -32,7 +32,7 @@ except Exception as err:
     logger.debug(str(err))
     logger.info("无推送文件")
 
-ver = 20203
+ver = 20218
 
 
 # 登录青龙 返回值 token
