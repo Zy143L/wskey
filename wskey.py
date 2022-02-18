@@ -212,7 +212,7 @@ def getToken(wskey):
 def appjmp(wskey, tokenKey):
     wskey = "pt_" + str(wskey.split(";")[0])
     if tokenKey == 'xxx':
-        logger.info(str(wskey) + ";WsKey状态失效\n--------------------\n")
+        logger.info(str(wskey) + ";疑似IP风控等问题 默认为失效\n--------------------\n")
         return False, wskey
     headers = {
         'User-Agent': ua,
