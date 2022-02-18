@@ -124,7 +124,7 @@ def get_ck():
 
 # 返回值 bool
 def check_ck(ck):
-    searchObj = re.search(r'pt_pin=([^;\s]+)', ck, re.M|re.I)
+    searchObj = re.search(r'pt_pin=([^;\s]+)', ck, re.M | re.I)
     if searchObj:
         pin = searchObj.group(1)
     else:
@@ -135,7 +135,7 @@ def check_ck(ck):
             updateHour = int(os.environ["WSKEY_UPDATE_HOUR"])
         nowTime = time.time()
         updatedAt = 0.0
-        searchObj = re.search(r'__time=([^;\s]+)', ck, re.M|re.I)
+        searchObj = re.search(r'__time=([^;\s]+)', ck, re.M | re.I)
         if searchObj:
             updatedAt = float(searchObj.group(1))
         if nowTime - updatedAt >= (updateHour * 60 * 60) - (10 * 60):
@@ -235,7 +235,10 @@ def appjmp(wskey, tokenKey):
             res_set = res.cookies.get_dict()
             pt_key = 'pt_key=' + res_set['pt_key']
             pt_pin = 'pt_pin=' + res_set['pt_pin']
-            jd_ck = str(pt_key) + '; ' + str(pt_pin) + '; __time=' + str(time.time())
+            if "WSKEY_UPDATE_HOUR" in os.environ:
+                jd_ck = str(pt_key) + ';' + str(pt_pin) + ';__time=' + str(time.time()) + ';'
+            else:
+                jd_ck = str(pt_key) + ';' + str(pt_pin) + ';'
         except Exception as err:
             logger.info("JD_appjmp提取Cookie错误 请重试或者更换IP\n")
             logger.info(str(err))
