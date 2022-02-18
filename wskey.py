@@ -147,7 +147,7 @@ def check_ck(ck):
             minute = int((remainingTime % 3600) / 60)
             logger.info(str(pin) + ";未到期，{0}时{1}分后更新\n".format(hour, minute))
             return True
-    elif "QL_WSCK" in os.environ:
+    elif "WSKEY_DISCHECK" in os.environ:
         logger.info("不检查账号有效性\n--------------------\n")
         return False
     else:
