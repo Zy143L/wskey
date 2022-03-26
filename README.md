@@ -1,4 +1,45 @@
+### 使用方法
 
+---
+
+**原版脚本地址** 
+```text
+ql repo https://github.com/Zy143L/wskey.git "wskey"
+```
+**镜像脚本地址**
+```text
+ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
+```
+
+---
+### 变量声明
+
+```shell
+变量名: JD_WSCK 参数: pin=xxxx;wskey=xxxx;
+# 注意分号 不要用中文分号!
+
+变量名: QL_PORT 参数: 端口号(int) 
+# 修改过面板端口的人才需要填写 默认 5700 
+# 是本地的端口 不是 Docker 映射出去的端口! 如果你映射参数是 8888:5700 仍然填写5700
+
+变量名: WSKEY_DISCHECK 参数: 任意(str)
+# 设置 QL_WSCK变量后变量后 不检查有效性 直接更新 不使用请删除 而不是禁用
+
+变量名: WSKEY_AUTO_DISABLE 参数: 任意(str)	
+# 设置 WSKEY_AUTO_DISABLE变量后 不会自动禁用变量
+
+变量名: WSKEY_UPDATE_HOUR 参数: 整数(int) 单位：小时
+# 设置 WSKEY_UPDATE_HOUR 变量后 会按设定的间隔时间更新 CK
+# 注意：使用此参数后，即使 CK 过期也不会更新，请不要设置过大的间隔
+
+变量名: WSKEY_TRY_COUNT 参数: 整数(int)
+# 设置 WSKEY_TRY_COUNT 变量后 获取 Token 失败会自动重试
+
+变量名: WSKEY_SLEEP 参数: 整数(int)
+# 设置 WSKEY_SLEEP 可自定义间隔时间
+```
+
+---
 ### 更新 · 摘要
 
 #### Version 2022-03-18
@@ -207,38 +248,6 @@
 
 ---
 
-### 使用方法
-
----
-
-**原版地址** **`ql repo https://github.com/Zy143L/wskey.git "wskey"`**
-
-**镜像地址 `ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"`**
-
-**使用建议 修改定时计划 `15 */8 * * *`  ~~默认为8小时15分执行一次~~ 请按需修改**
-
----
-### 变量声明
-
-```shell
-变量名: JD_WSCK 参数: pin=xxxx;wskey=xxxx;
-# 注意分号 不要用中文分号!
-变量名: QL_PORT 参数: 端口号(int) 
-# 修改过面板端口的人才需要填写 默认 5700 
-# 是本地的端口 不是 Docker 映射出去的端口! 如果你映射参数是 8888:5700 仍然填写5700
-变量名: WSKEY_DISCHECK 参数: 任意(str)
-# 设置 QL_WSCK变量后变量后 不检查有效性 直接更新 不使用请删除 而不是禁用
-变量名: WSKEY_AUTO_DISABLE 参数: 任意(str)	
-# 设置 WSKEY_AUTO_DISABLE变量后 不会自动禁用变量
-变量名: WSKEY_UPDATE_HOUR 参数: 整数(int) 单位：小时
-# 设置 WSKEY_UPDATE_HOUR 变量后 会按设定的间隔时间更新 CK
-# 注意：使用此参数后，即使 CK 过期也不会更新，请不要设置过大的间隔
-变量名: WSKEY_TRY_COUNT 参数: 整数(int)
-# 设置 WSKEY_TRY_COUNT 变量后 获取 Token 失败会自动重试
-变量名: WSKEY_SLEEP 参数: 整数(int)
-# 设置 WSKEY_SLEEP 可自定义间隔时间
-```
----
 
 ### 程序特点
 
