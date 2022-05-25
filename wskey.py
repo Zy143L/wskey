@@ -393,11 +393,11 @@ def update():  # 方法 脚本更新模块
         # sys.exit(0)  # 退出脚本 [未启用]
 
 
-def ql_check(port):  # 方法 检查青龙端口
+def ql_check(host, port):  # 方法 检查青龙端口
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Socket模块初始化
     sock.settimeout(2)  # 设置端口超时
     try:  # 异常捕捉
-        sock.connect(('127.0.0.1', port))  # 请求端口
+        sock.connect((host, port))  # 请求端口
     except Exception as err:  # 捕捉异常
         logger.debug(str(err))  # 调试日志输出
         sock.close()  # 端口关闭
@@ -543,8 +543,7 @@ def check_cloud():  # 方法 云端地址检查
     ql_send('云端地址失效. 请联系作者或者检查网络.')  # 推送消息
     sys.exit(1)  # 脚本退出
 
-
-def check_port():  # 方法 检查变量传递端口
+def get_port():  # 方法 获取青龙端口
     logger.info("\n--------------------\n")  # 标准日志输出
     if "QL_PORT" in os.environ:  # 判断 系统变量是否存在[QL_PORT]
         try:  # 异常捕捉
@@ -556,18 +555,37 @@ def check_port():  # 方法 检查变量传递端口
             return 5700  # 返回端口 5700
     else:  # 判断分支
         port = 5700  # 默认5700端口
-    if not ql_check(port):  # 调用方法 [ql_check] 传递 [port]
-        logger.info(str(port) + "端口检查失败, 如果改过端口, 请在变量中声明端口 \n在config.sh中加入 export QL_PORT=\"端口号\"")  # 标准日志输出
+    return port  # 返回->port
+
+def get_host():  # 方法 获取青龙host
+    logger.info("\n--------------------\n")  # 标准日志输出
+    if "QL_HOST" in os.environ:  # 判断 系统变量是否存在[QL_HOST]
+        try:  # 异常捕捉
+            host = str(os.environ['QL_HOST'])  # 取值 [int]
+        except Exception as err:  # 异常捕捉
+            logger.debug(str(err))  # 调试日志输出
+            logger.info("变量格式有问题...\n格式: export QL_HOST=\"HOST\"")  # 标准日志输出
+            logger.info("使用默认host 127.0.0.1")  # 标准日志输出
+            return "127.0.0.1"  # 返回host 127.0.0.1
+    else:  # 判断分支
+        host = "127.0.0.1"  # 默认127.0.0.1
+    return host  # 返回->host
+
+def get_ql_url():  # 方法 获取青龙地址
+    logger.info("\n--------------------\n")  # 标准日志输出
+    port = get_port() # 调用方法 [get_port]  并赋值 [port]
+    host = get_host() # 调用方法 [get_host]  并赋值 [host]
+    ql_url = 'http://{0}:{1}/'.format(host, port)
+    if not ql_check(host, port):  # 调用方法 [ql_check] 传递 [host, port]
+        logger.info(str(ql_url) + "地址检查失败, 如果改过端口, 请在变量中声明端口 \n在config.sh中加入 export QL_PORT=\"端口号\" \n如果青龙不在本机, 请在变量中声明host \n在config.sh中加入 export QL_HOST=\"目标青龙所在IP\"")  # 标准日志输出
         logger.info("\n如果你很确定端口没错, 还是无法执行, 在GitHub给我发issus\n--------------------\n")  # 标准日志输出
         sys.exit(1)  # 脚本退出
     else:  # 判断分支
-        logger.info(str(port) + "端口检查通过")  # 标准日志输出
-        return port  # 返回->port
-
+        logger.info(str(ql_url) + "地址检查通过")  # 标准日志输出
+        return ql_url  # 返回->ql_url    
 
 if __name__ == '__main__':  # Python主函数执行入口
-    port = check_port()  # 调用方法 [check_port]  并赋值 [port]
-    ql_url = 'http://127.0.0.1:{0}/'.format(port)
+    ql_url = get_ql_url（） # 调用方法 [get_ql_url]  并赋值 [ql_url]
     token = ql_login()  # 调用方法 [ql_login]  并赋值 [token]
     s = requests.session()  # 设置 request session方法
     s.headers.update({"authorization": "Bearer " + str(token)})  # 增加 HTTP头认证

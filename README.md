@@ -18,6 +18,9 @@ ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
 变量名: JD_WSCK 参数: pin=xxxx;wskey=xxxx;
 # 注意分号 不要用中文分号!
 
+变量名: QL_HOST 参数: IP地址(str) 
+# 非本机或者非同一容器才需要填写 默认 127.0.0.1
+
 变量名: QL_PORT 参数: 端口号(int) 
 # 修改过面板端口的人才需要填写 默认 5700 
 # 是本地的端口 不是 Docker 映射出去的端口! 如果你映射参数是 8888:5700 仍然填写5700
