@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+wskey_local.py
 # Distribution / packaging
 .idea/
 .Python
