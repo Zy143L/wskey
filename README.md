@@ -42,7 +42,7 @@ ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
 ---
 ### 更新 · 摘要
 
-#### Version 2022-10-27 青龙版本: 2.13.3
+#### Version 2022-10-31 青龙版本: 2.14.8
 
 ---
 **2022年10月31日 11:29:55**
