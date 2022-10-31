@@ -45,6 +45,10 @@ ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
 #### Version 2022-10-27 青龙版本: 2.13.3
 
 ---
+**2022年10月31日 11:29:55**
+- **移除HTTP接口**
+
+---
 **2022年10月27日 17:31:20**
 - **修复脚本报错问题**
 
