@@ -2,13 +2,9 @@
 
 ---
 
-**原版脚本地址** 
+**脚本地址** 
 ```text
 ql repo https://github.com/Zy143L/wskey.git "wskey"
-```
-**镜像脚本地址**
-```text
-ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
 ```
 
 ---
@@ -42,7 +38,11 @@ ql repo https://e.coding.net/HelloDNS/sign/wskey.git "wskey"
 ---
 ### 更新 · 摘要
 
-#### Version 2023-11-19 青龙版本: 2.14.8
+#### Version 2023-12-07 青龙版本: 2.14.8
+
+---
+**2023年12月7日 03:59:26**
+- **优化脚本逻辑 提高运行效率**
 
 ---
 **2023年11月19日 15:53:21**
